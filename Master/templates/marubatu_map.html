@@ -1,0 +1,23 @@
+<!doctype html>
+{% extends "layout.html" %}
+{% block content %}
+<link rel="stylesheet" href="../static/stylesheet.css">
+<div>
+    <body>
+        <h3>marubatu game</h3>
+        <p>
+        {% for i in range(9) %}   
+        <img src="{{url_for('static', filename='siro.jpeg')}}" alt="" usemap="#map{{i}}"/>
+        <map name="map{{i}}">
+        <area shape="rect" coords="0,0,75,150" href="http://127.0.0.1:5000/chamge_maru?num={{i}}" alt="マル">
+        <area shape="rect" coords="76,0,150,150" href="http://127.0.0.1:5000/edit?batu={{i}}" alt="バツ">
+        </map>
+        {% if i == 2 or i == 5 or i == 8 %}
+        <br>       
+        {% endif %}
+        {% endfor %}
+        {{user}}
+        </p>
+    </body>
+</div>        
+{% endblock %}

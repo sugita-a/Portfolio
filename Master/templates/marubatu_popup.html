@@ -1,0 +1,74 @@
+<!doctype html>
+{% extends "layout.html" %}
+{% block content %}
+<link rel="stylesheet" href="../static/reset.css">
+<link rel="stylesheet" href="../static/stylesheet.css">
+<div class="marubatu">
+    <body>
+        <h3>marubatu game</h3>
+        <div class="game"> 
+        {% for i in range(9) %}
+            <label for="popup-on{{i}}">
+                {% if user[i] == 'maru.jpeg' %}
+                <img src="{{url_for('static', filename='maru.jpeg')}}" alt="">
+                {% elif user[i] == 'batu.jpeg' %}
+                <img src="{{url_for('static', filename='batu.jpeg')}}" alt="">
+                {% else %}
+                <img src="{{url_for('static', filename=user[i])}}" alt="" class="layer-img"></label>
+                    <input type="checkbox" id="popup-on{{i}}">
+                    <div class="popup">
+                        <label for="popup-on{{i}}" class="icon-close">×</label>
+                        <div class="popup-content">
+                         <!-- ポップアップの中身 -->
+                        マルorバツ<br>
+                        <a href="http://127.0.0.1:5000/change_maru?num={{i}}"><img src="{{url_for('static', filename='maru.jpeg')}}" alt="" class="layer-img"></a>
+                        <a href="http://127.0.0.1:5000/change_batu?num={{i}}"><img src="{{url_for('static', filename='batu.jpeg')}}" alt="" class="layer-img"></a>
+                         <!-- ./ポップアップの中身　ここまで -->
+                        </div>
+                        <label for="popup-on{{i}}"><div class="btn-close">閉じる</div></label>
+                    </div>
+            {% if i == 2 or i == 5 or i == 8 %}
+            <br>
+            {% endif %} 
+                {% endif %}
+        {% endfor %}
+
+        <!--勝敗判定-->
+        {%
+            if (hantei[0] + hantei[1] + hantei[2]) == 3
+            or (hantei[3] + hantei[4] + hantei[5]) == 3
+            or (hantei[6] + hantei[7] + hantei[8]) == 3
+            or (hantei[0] + hantei[3] + hantei[6]) == 3
+            or (hantei[1] + hantei[4] + hantei[7]) == 3
+            or (hantei[2] + hantei[5] + hantei[8]) == 3
+            or (hantei[0] + hantei[4] + hantei[8]) == 3
+            or (hantei[2] + hantei[4] + hantei[6]) == 3
+        %}
+        <h1>マルの勝ち</h1>
+        {%
+          elif (hantei[0] + hantei[1] + hantei[2]) == 12
+            or (hantei[3] + hantei[4] + hantei[5]) == 12
+            or (hantei[6] + hantei[7] + hantei[8]) == 12
+            or (hantei[0] + hantei[3] + hantei[6]) == 12
+            or (hantei[1] + hantei[4] + hantei[7]) == 12
+            or (hantei[2] + hantei[5] + hantei[8]) == 12
+            or (hantei[0] + hantei[4] + hantei[8]) == 12
+            or (hantei[2] + hantei[4] + hantei[6]) == 12
+       %}
+       <h1>バツの勝ち</h1>
+       {% elif "siro.jpeg" not in user %}
+       <h1>引き分け</h1>
+       {% endif %}
+        <!--勝敗判定ここまで-->
+        
+        </div>
+    
+        <p>
+        <form action="reset">
+        <input type="submit" value="リセット">
+
+        </form>
+        </p>
+    </body>
+</div>        
+{% endblock %}
